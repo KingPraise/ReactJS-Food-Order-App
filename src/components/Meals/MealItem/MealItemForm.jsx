@@ -16,7 +16,7 @@ const MealItemForm = (props) => {
             defaultValue: "1",
           }}
         />
-        <button type="submit">+ Add</button>
+        <button>+ Add</button>
       </form>
     </div>
   );

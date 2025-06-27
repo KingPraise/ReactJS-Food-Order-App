@@ -9,7 +9,6 @@ const Input = (props) => {
         id={props.input.id}
         {...props.input} // Spread the input props to allow for flexibility
       />
-      {props.error && <p className={classes.error}>{props.error}</p>}
     </div>
   );
 };

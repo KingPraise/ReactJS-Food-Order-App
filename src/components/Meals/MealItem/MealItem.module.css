@@ -1,0 +1,37 @@
+.meal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #ccc;
+}
+.meal h3 {
+  margin: 0 0 0.5rem 0;
+}
+
+.description {
+  font-style: italic;
+  color: #7a7a7a;
+}
+.price {
+  font-weight: bold;
+  color: #ad5502;
+  margin-top: 0.25rem;
+}
+
+.meal button {
+  font: inherit;
+  background-color: #8a2b06;
+  color: white;
+  border: 1px solid #8a2b06;
+  padding: 0.5rem 1.5rem;
+  border-radius: 25px;
+  cursor: pointer;
+}
+.meal button:hover,
+.meal button:active {
+  background-color: #641e03;
+  border-color: #641e03;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+}

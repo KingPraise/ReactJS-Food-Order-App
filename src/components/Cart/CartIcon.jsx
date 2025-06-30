@@ -1,3 +1,16 @@
+/**
+ * CartIcon is a React functional component that renders a shopping cart SVG icon.
+ *
+ * @component
+ * @returns {JSX.Element} The SVG representation of a shopping cart icon.
+ *
+ * Line-by-line explanation:
+ * - The component returns an SVG element.
+ * - xmlns: Specifies the XML namespace for SVG.
+ * - viewBox: Sets the coordinate system and size of the SVG.
+ * - fill: Sets the fill color to the current text color.
+ * - <path>: Defines the shape of the cart icon using SVG path data.
+ */
 const CartIcon = () => {
   return (
     <svg

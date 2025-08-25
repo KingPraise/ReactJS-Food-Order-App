@@ -109,14 +109,4 @@ Current status: the README documents implemented features and structure; recomme
 3. Add a lightweight CI workflow (GitHub Actions) that runs build and tests on PRs.
 4. Consider persisting cart state to localStorage and restoring it on load.
 
-## Contributing
 
-If you'd like to contribute, please open an issue or a PR. Keep changes small and focused, and run the app locally before submitting.
-
-## License
-
-This repository does not include a license file. Add one (for example `MIT`) if you plan to publish or share the code.
-
----
-
-If you'd like, I can also add ESLint/Prettier, a basic test for the cart, or a GitHub Actions CI workflow next — tell me which and I'll implement it.

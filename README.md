@@ -1,70 +1,122 @@
-# Getting Started with Create React App
+# React Food Order App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A small, focused React application that demonstrates a food-ordering UI with a cart. The project was bootstrapped with Create React App and implements component-based UI, local state management with React Context, and a clean modular folder structure.
 
-## Available Scripts
+## Quick summary
 
-In the project directory, you can run:
+- Purpose: a demo app to browse meals, add them to a cart, and review cart contents.
+- Main technologies: React (functional components + hooks), CSS Modules, Create React App.
+- Key patterns: component decomposition, presentational vs container components, centralized cart context for state.
 
-### `npm start`
+## What was implemented
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Header with a cart button and a logo.
+- Meals listing with individual MealItem components that include an add-to-cart form.
+- Cart overlay modal showing added items and total amount.
+- Cart context (`src/store/cart-context.js`) and provider (`src/store/CartProvider.js`) that expose an API to add/remove items and track totals.
+- Reusable UI primitives: `Card`, `Modal`, and `Input` components.
+- Styling via CSS Modules for component encapsulation (`*.module.css`).
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Project structure (high level)
 
-### `npm test`
+- `public/` — static html and manifest
+- `src/` — application source
+	- `assets/` — images used by the app (logo, meals)
+	- `components/` — UI components grouped by feature
+		- `Cart/` — `Cart.jsx`, `CartItem.js`, `CartIcon.jsx`, styles
+		- `Layout/` — `Header.jsx`, `HeaderCartButton.jsx`, styles
+		- `Meals/` — `AvailableMeals.jsx`, `Meals.jsx`, `MealsSummary.jsx`, `MealItem/` with form
+		- `UI/` — `Card.jsx`, `Modal.jsx`, `Input.jsx`, styles
+	- `store/` — `cart-context.js` (context definition) and `CartProvider.js` (provider wiring)
+	- `App.js`, `index.js`, and standard CRA files
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Data shapes / contract
 
-### `npm run build`
+- Cart item shape (used throughout the context and components):
+	- id: string
+	- name: string
+	- amount: number (quantity)
+	- price: number (per-item price in app currency)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Cart context exposes:
+	- items: Array<CartItem>
+	- totalAmount: number
+	- addItem(item)
+	- removeItem(id)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Error modes: the app assumes valid data from the built-in meal list (no external API). Edge cases handled in UI: empty cart state, adding/removing quantities, disabling invalid form inputs.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## How to run (developer / local)
 
-### `npm run eject`
+1. Install dependencies:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+npm install
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. Start dev server:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```bash
+npm start
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+3. Build for production:
 
-## Learn More
+```bash
+npm run build
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+4. Run tests (if you add tests later):
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+npm test
+```
 
-### Code Splitting
+Notes:
+- The project uses Create React App conventions. If you customized scripts or added TypeScript, update commands accordingly.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Development & best practices applied (and recommended extras)
 
-### Analyzing the Bundle Size
+- Component-first design: UI is split into small, focused components to keep concerns isolated.
+- Encapsulated styles: CSS Modules (`*.module.css`) prevent global style leakage.
+- Single source of truth for cart state: React Context centralizes cart logic and reduces prop drilling.
+- Accessibility: prefer semantic HTML, labeled inputs, and accessible button markup. (Verify with an a11y tool.)
+- Performance: memoize pure components and avoid unnecessary re-renders when the UI grows.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Recommended small follow-ups you may want to add:
+- Unit/integration tests for critical logic (cart reducer, add/remove flows). Use Jest + React Testing Library.
+- Type safety: migrate to TypeScript or add PropTypes for public components to prevent bugs.
+- Linting & formatting: add ESLint and Prettier, and configure Husky + lint-staged for pre-commit checks.
+- E2E tests: add a minimal Cypress test that covers basic add-to-cart and checkout flows.
 
-### Making a Progressive Web App
+## Quality gates and verification
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- Build: `npm run build` (CRA build). Should succeed on a standard Node environment.
+- Lint: if ESLint is not configured, add it with `npx eslint --init` and fix issues.
+- Tests: none included by default in this snapshot—add tests as recommended above.
 
-### Advanced Configuration
+Current status: the README documents implemented features and structure; recommended extras are listed as next steps.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Troubleshooting
 
-### Deployment
+- If the server doesn't start: ensure Node (LTS) and npm are installed, remove `node_modules` and reinstall.
+- If CSS Modules fail to load: ensure filenames follow the `*.module.css` pattern (already used here).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Next steps / roadmap
 
-### `npm run build` fails to minify
+1. Add unit tests for `CartProvider` and `CartItem` logic.
+2. Add ESLint + Prettier and run across the codebase.
+3. Add a lightweight CI workflow (GitHub Actions) that runs build and tests on PRs.
+4. Consider persisting cart state to localStorage and restoring it on load.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Contributing
+
+If you'd like to contribute, please open an issue or a PR. Keep changes small and focused, and run the app locally before submitting.
+
+## License
+
+This repository does not include a license file. Add one (for example `MIT`) if you plan to publish or share the code.
+
+---
+
+If you'd like, I can also add ESLint/Prettier, a basic test for the cart, or a GitHub Actions CI workflow next — tell me which and I'll implement it.
